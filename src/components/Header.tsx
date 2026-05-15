@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -18,9 +18,7 @@ export default function Header() {
                     }
                 });
             },
-            {
-                rootMargin: "-40% 0px -40% 0px",
-            }
+            { rootMargin: "-40% 0px -40% 0px" }
         );
 
         const sections = document.querySelectorAll("section[id]");
@@ -53,47 +51,35 @@ export default function Header() {
             lenis.scrollTo(id === "me" ? 0 : `#${id}`, {
                 offset: id === "me" ? 0 : -104,
                 duration: 0.8,
-                easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });
-        } else {
-            if (id === "me") {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            } else {
-                const section = document.getElementById(id);
-                if (section) {
-                    const targetY = section.getBoundingClientRect().top + window.scrollY - 104;
-                    window.scrollTo({ top: targetY, behavior: "smooth" });
-                }
-            }
         }
 
         setActiveSection(id);
         setIsMenuOpen(false);
-        window.history.pushState(null, "", `#${id}`);
     };
 
     return (
-        <>
-            <div className="fixed top-0 w-full max-w-5xl mx-auto flex items-center justify-between h-[104px] px-6 md:px-12 lg:px-24 z-40 pointer-events-none left-1/2 -translate-x-1/2">
+        <header className="fixed top-0 w-full z-50 flex justify-center h-[104px] items-center px-6 pointer-events-none">
+            <div className="w-full max-w-5xl flex justify-between items-center pointer-events-auto">
+                {/* Logo com peso Medium */}
                 <Link
                     href="#me"
                     onClick={(e) => handleScrollTo("me", e)}
-                    className={`text-[24px] font-medium tracking-tight pointer-events-auto transition-all duration-300 px-6 py-2 rounded-2xl ${
+                    className={`text-[24px] font-medium tracking-tighter cursor-pointer transition-all duration-300 px-6 py-2 rounded-2xl ${
                         isScrolled
-                            ? 'bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-800/50 shadow-sm'
-                            : 'bg-transparent border border-transparent'
+                            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border border-neutral-200/50 dark:border-neutral-800/50"
+                            : "bg-transparent border border-transparent"
                     }`}
                 >
                     ROBERTO C.
                 </Link>
-            </div>
 
-            <div className="fixed top-0 w-full max-w-5xl mx-auto flex items-center justify-end h-[104px] px-6 md:px-12 lg:px-24 z-50 pointer-events-none left-1/2 -translate-x-1/2">
+                {/* Desktop Nav - Ícones Material Symbols Rounded/Fill */}
                 <nav
-                    className={`hidden md:flex items-center gap-[40px] px-8 py-3 rounded-2xl pointer-events-auto transition-all duration-300 ${
+                    className={`hidden md:flex items-center gap-8 px-8 py-3 rounded-2xl transition-all duration-300 ${
                         isScrolled
-                            ? 'bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-800/50 shadow-sm'
-                            : 'bg-transparent border border-transparent'
+                            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border border-neutral-200/50 dark:border-neutral-800/50"
+                            : "bg-transparent border border-transparent"
                     }`}
                 >
                     {navLinks.map((link) => (
@@ -101,57 +87,71 @@ export default function Header() {
                             key={link.id}
                             href={`#${link.id}`}
                             onClick={(e) => handleScrollTo(link.id, e)}
-                            className={`flex items-center justify-center transition-colors duration-300 ${
+                            className={`flex items-center justify-center cursor-pointer transition-colors duration-300 ${
                                 activeSection === link.id
-                                    ? 'text-neutral-900 dark:text-neutral-100'
-                                    : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+                                    ? "text-neutral-900 dark:text-neutral-100"
+                                    : "text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                             }`}
                         >
-                            <span className="material-symbols-rounded text-[26px]">{link.icon}</span>
+                            <span className="material-symbols-rounded text-[28px]">{link.icon}</span>
                         </Link>
                     ))}
                 </nav>
 
+                {/* Mobile Hamburger Menu Button */}
                 <button
-                    className={`md:hidden p-3 text-neutral-900 dark:text-neutral-100 flex items-center justify-center rounded-2xl pointer-events-auto transition-all duration-300 ${
+                    className={`md:hidden p-4 rounded-2xl cursor-pointer transition-all duration-300 flex items-center justify-center ${
                         isScrolled
-                            ? 'bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-800/50 shadow-sm'
-                            : 'bg-transparent border border-transparent'
+                            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border border-neutral-200/50 dark:border-neutral-800/50"
+                            : "bg-transparent border border-transparent"
                     }`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label="Menu"
+                    aria-label="Toggle Menu"
                 >
-                    <div className="grid grid-cols-3 gap-[3px] w-5 h-5">
-                        {[...Array(9)].map((_, i) => (
-                            <div key={i} className="bg-current rounded-[1px]" />
-                        ))}
+                    <div className="flex flex-col gap-1.5 w-6">
+                        <motion.span 
+                            animate={isMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                            className="w-full h-0.5 bg-current rounded-full" 
+                        />
+                        <motion.span 
+                            animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                            className="w-full h-0.5 bg-current rounded-full" 
+                        />
+                        <motion.span 
+                            animate={isMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                            className="w-full h-0.5 bg-current rounded-full" 
+                        />
                     </div>
                 </button>
             </div>
 
-            {isMenuOpen && (
-                <motion.nav
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="md:hidden w-full flex flex-col gap-6 p-6 text-[20px] font-normal bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-800/50 rounded-2xl fixed top-[104px] z-40 shadow-sm left-1/2 -translate-x-1/2 max-w-[calc(100vw-48px)] pointer-events-auto"
-                >
-                    {navLinks.map((link) => (
-                        <Link
-                            key={`mobile-${link.id}`}
-                            href={`#${link.id}`}
-                            onClick={(e) => handleScrollTo(link.id, e)}
-                            className={`flex items-center gap-4 transition-colors duration-300 ${
-                                activeSection === link.id
-                                    ? 'text-neutral-900 dark:text-neutral-100'
-                                    : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-                            }`}
-                        >
-                            <span className="material-symbols-rounded text-[24px]">{link.icon}</span>
-                            <span className="uppercase">{link.label}</span>
-                        </Link>
-                    ))}
-                </motion.nav>
-            )}
-        </>
+            {/* Mobile Navigation Overlay */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.nav
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed top-[104px] left-6 right-6 p-8 bg-white/90 dark:bg-black/90 backdrop-blur-xl border border-neutral-200/50 dark:border-neutral-800/50 rounded-[32px] shadow-2xl flex flex-col gap-6 md:hidden pointer-events-auto"
+                    >
+                        {navLinks.map((link) => (
+                            <Link
+                                key={`mobile-${link.id}`}
+                                href={`#${link.id}`}
+                                onClick={(e) => handleScrollTo(link.id, e)}
+                                className={`flex items-center gap-4 text-xl font-medium cursor-pointer transition-colors ${
+                                    activeSection === link.id
+                                        ? "text-neutral-900 dark:text-neutral-100"
+                                        : "text-neutral-400"
+                                }`}
+                            >
+                                <span className="material-symbols-rounded text-[28px]">{link.icon}</span>
+                                <span className="uppercase">{link.label}</span>
+                            </Link>
+                        ))}
+                    </motion.nav>
+                )}
+            </AnimatePresence>
+        </header>
     );
 }
