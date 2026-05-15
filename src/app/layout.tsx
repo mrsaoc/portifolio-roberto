@@ -1,53 +1,36 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Poppins } from "next/font/google"; // Importando Poppins
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomScroll from "@/components/CustomScroll";
 
-const sfProRounded = localFont({
-    src: [
-        {
-            path: "../../public/fonts/SF-Pro-Rounded-Regular.otf",
-            weight: "400",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/SF-Pro-Rounded-Medium.otf",
-            weight: "500",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/SF-Pro-Rounded-Semibold.otf",
-            weight: "600",
-            style: "normal",
-        },
-    ],
-    variable: "--font-sf-pro-rounded",
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
-    title: "Marcos Vinícius | Visionary Design",
-    description: "Portfólio de alto padrão com Tailwind v4",
+  title: "ROBERTO C. | Backend Engineer",
+  description: "Especialista em Java, MySQL e C",
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode;
-}) {
-    return (
-        <html
-            lang="pt-br"
-            className={`scroll-smooth scrollbar-hide h-full ${sfProRounded.variable}`}
-            suppressHydrationWarning
-        >
-        <body className="min-h-full font-sans antialiased bg-white dark:bg-black text-neutral-900 dark:text-neutral-100 selection:bg-neutral-500/30 overflow-x-hidden transition-colors duration-300">
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="pt-br" className={`h-full ${poppins.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Importando Material Symbols com suporte a Rounded e Fill */}
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" 
+          rel="stylesheet" 
+        />
+      </head>
+      <body className="min-h-full font-sans antialiased bg-white dark:bg-black text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
         <SmoothScroll>
-            <CustomScroll />
-            {/* O children aqui já contém o Header e o Main do page.tsx */}
-            {children}
+          <CustomScroll />
+          {children}
         </SmoothScroll>
-        </body>
-        </html>
-    );
+      </body>
+    </html>
+  );
 }

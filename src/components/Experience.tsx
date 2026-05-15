@@ -7,14 +7,10 @@ import { fadeInUp } from "@/utils/animations";
 import AnimatedButton from "./AnimatedButton";
 
 const projects = [
-    { id: 1, title: "project 1", tags: ["PHP", "CSS", "HTML"], image: "https://images.unsplash.com/photo-1549480017-d76466a4b7e8?q=80&w=800&auto=format&fit=crop" },
-    { id: 2, title: "project 2", tags: ["NEXT.JS", "TS"], image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?q=80&w=800&auto=format&fit=crop" },
-    { id: 3, title: "project 3", tags: ["FIGMA", "UI"], image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop" },
-    { id: 4, title: "project 4", tags: ["REACT", "UX"], image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop" },
-    { id: 5, title: "project 5", tags: ["TAILWIND"], image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop" },
-    { id: 6, title: "project 6", tags: ["NODE.JS"], image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" },
-    { id: 7, title: "project 7", tags: ["PYTHON"], image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop" },
-    { id: 8, title: "project 8", tags: ["JAVA"], image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" },
+    { id: 1, title: "core banking api", tags: ["JAVA", "SPRING", "MYSQL"], image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" },
+    { id: 2, title: "embedded system", tags: ["C", "RTOS", "HARDWARE"], image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop" },
+    { id: 3, title: "data parser pro", tags: ["C", "ALGORITHMS"], image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop" },
+    { id: 4, title: "query optimizer", tags: ["MYSQL", "TUNING"], image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop" },
 ];
 
 export default function Experience() {
@@ -61,7 +57,7 @@ export default function Experience() {
             variants={fadeInUp}
             className="w-full flex flex-col gap-10 scroll-mt-32 overflow-x-hidden"
         >
-            <h2 className="w-full text-left text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+            <h2 className="w-full text-left text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 uppercase">
                 experience
             </h2>
 
@@ -90,8 +86,6 @@ export default function Experience() {
                                     src={project.image}
                                     alt={project.title}
                                     fill
-                                    sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 448px, 512px"
-                                    draggable={false}
                                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                                 />
                             </div>
@@ -112,12 +106,12 @@ export default function Experience() {
                                 </div>
 
                                 <p className="text-sm md:text-base lg:text-[20px] font-normal leading-relaxed text-neutral-600 dark:text-neutral-400 line-clamp-2 mb-3">
-                                    lorem ipsum dolor sit amet, consectetur adipiscing elit. curabitur et consequat leo.
+                                    Desenvolvimento estrutural focado em integridade de dados e performance algorítmica.
                                 </p>
 
                                 <div className="mt-auto pt-2">
                                     <AnimatedButton icon="right" className="text-sm md:text-base lg:text-[20px]">
-                                        see
+                                        ver
                                     </AnimatedButton>
                                 </div>
                             </div>
