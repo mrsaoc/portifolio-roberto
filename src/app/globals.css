@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  /* Mapeando SF Pro Rounded para o tema do Tailwind v4 */
+  --font-sans: var(--font-sf-pro-rounded), ui-sans-serif, system-ui, sans-serif;
+
+  /* Tokens de Cores */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+}
+
+/* Modo Dark */
+.dark {
+  --color-background: #000000;
+  --color-foreground: #ededed;
+}
+
+/* Utilitários Customizados v4 */
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility glass {
+  @apply backdrop-blur-md bg-white/5 border border-white/10;
+}
+
+@layer base {
+  :root {
+    /* Variável injetada pelo Next.js Font */
+    --font-sf-pro-rounded: "SF Pro Rounded";
+  }
+
+  html {
+    /* Garante estabilidade visual ao esconder o scroll nativo */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-(--color-background) text-(--color-foreground) antialiased;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+/* Suavização de fontes Apple */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
